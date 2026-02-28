@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Bio-Comic - Santi</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    /* ==============================
+       RESET + VARS
+    ============================== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: "Comic Sans MS", cursive, sans-serif;
+      /* ¡TU IMAGEN COMO BACKGROUND! */
+      background-image: url('Imagenes/Imagen1.webp');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+      color: #333;
+      line-height: 1.6;
+      padding-top: 60px;
+      min-height: 100vh;
+    }
+    a {
+      text-decoration: none;
+      color: #0066cc;
+    }
+
+    /* ==============================
+       HEADER FIJO (MENÚ)
+    ============================== */
+    header.fixed-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: linear-gradient(135deg, #000 0%, #222 100%);
+      color: white;
+      padding: 0.8rem 1.5rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      z-index: 1000;
+      border-bottom: 3px solid #ffcc00;
+    }
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .brand {
+      font-size: 2rem;
+      font-weight: bold;
+      letter-spacing: 1px;
+      color: #ffcc00;
+      text-shadow: 0 0 8px rgba(255, 204, 0, 0.8);
+    }
+    .menu {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+    }
+    .menu a {
+      color: white;
+      font-size: 1.1rem;
+      font-weight: 600;
+      padding: 0.4rem 0.8rem;
+      border-radius: 20px;
+      transition: background 0.3s, transform 0.2s;
+    }
+    .menu a:hover {
+      background: #ffcc00;
+      color: #000;
+      transform: scale(1.05);
+      box-shadow: 0 0 10px rgba(255, 204, 0, 0.6);
+    }
+
+    /* ==============================
+       SECCIONES PRINCIPALES
+    ============================== */
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+    .section {
+      margin-bottom: 3.5rem;
+      border-radius: 16px;
+      padding: 2rem;
+      background: white;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+      border: 3px solid #ffcc00;
+      position: relative;
+    }
+    .section::before {
+      content: "";
+      position: absolute;
+      top: -10px;
+      left: 20px;
+      width: 80px;
+      height: 80px;
+      background: radial-gradient(circle, #ffcc00 0%, transparent 70%);
+      opacity: 0.3;
+      border-radius: 50%;
+      z-index: -1;
+    }
+    .section h2 {
+      color: #000;
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      font-weight: bold;
+      text-shadow: 2px 2px 0 #ffcc00;
+    }
+    .section p {
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+      max-width: 750px;
+    }
+
+    /* Hero: título grande y subtítulo */
+    .hero {
+      text-align: center;
+      padding: 4rem 2rem 2rem;
+      background: linear-gradient(180deg, #ffcc00 0%, #ff9900 100%);
+      color: #000;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(255, 204, 0, 0.3);
+      margin-bottom: 2.5rem;
+      border: 3px solid #000;
+    }
+    .hero .title {
+      font-size: 3.5rem;
+      font-weight: bold;
+      text-shadow: 4px 4px 0 #000, 6px 6px 10px rgba(0,0,0,0.4);
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+    .hero .subtitle {
+      font-size: 1.2rem;
+      font-style: italic;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    /* Avatar / foto cómic */
+    .avatar {
+      max-width: 180px;
+      border-radius: 16px;
+      border: 4px solid #000;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      margin-top: 1.5rem;
+    }
+
+    /* Sección "Mi App" */
+    .teaser-panel {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1.5rem;
+      justify-content: center;
+    }
+    .panel-teaser {
+      width: 120px;
+      border-radius: 12px;
+      border: 3px solid #000;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+    }
+
+    /* Sección "Comics" - tarjetas */
+    #comics .section h2 {
+      text-align: center;
+    }
+    .comic-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.8rem;
+      margin-top: 1.5rem;
+    }
+    .comic-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      background: white;
+      border-radius: 18px;
+      padding: 1.5rem;
+      transition: transform 0.3s, box-shadow 0.3s;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+      border: 3px dashed #ffcc00;
+    }
+    .comic-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 25px rgba(0,0,0,0.2);
+    }
+    .comic-cover {
+      width: 100%;
+      max-width: 220px;
+      border-radius: 14px;
+      border: 3px solid #000;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+      margin-bottom: 1rem;
+    }
+    .comic-card h3 {
+      color: #000;
+      font-size: 1.3rem;
+      margin-bottom: 0.8rem;
+      font-weight: bold;
+      text-shadow: 1px 1px 0 #ffcc00;
+    }
+    .comic-card p {
+      font-size: 1rem;
+      color: #555;
+    }
+    .btn {
+      margin-top: 1rem;
+      padding: 0.8rem 1.4rem;
+      background: #000;
+      color: #ffcc00;
+      font-weight: bold;
+      border-radius: 24px;
+      border: 3px solid #ffcc00;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      transition: background 0.3s, color 0.3s;
+    }
+    .btn:hover {
+      background: #ffcc00;
+      color: #000;
+      transform: scale(1.05);
+    }
+
+    /* Footer */
+    footer.site-footer {
+      background: #000;
+      color: #ccc;
+      text-align: center;
+      padding: 1.8rem 1.5rem;
+      margin-top: 3rem;
+      box-shadow: 0 -4px 15px rgba(0,0,0,0.3);
+    }
+    .timeline {
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+      color: #ffcc00;
+      font-weight: bold;
+    }
+    .social-links {
+      margin-top: 0.8rem;
+    }
+    .social-links a {
+      color: #ffcc00;
+      margin: 0 0.8rem;
+      font-weight: bold;
+    }
+    .social-links a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header fijo (navegación) -->
+  <header class="fixed-header">
+    <nav class="navbar">
+      <a href="#hero" class="brand">Bio-Comic</a>
+      <ul class="menu">
+        <li><a href="#hero">Inicio</a></li>
+        <li><a href="#sobre-mi">Sobre Mí</a></li>
+        <li><a href="#comics">Comics</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Contenido principal -->
+  <main>
+
+    <!-- Hero: título y subtítulo -->
+    <section class="hero" id="hero">
+      <h1 class="title">Bio-Comic</h1>
+      <p class="subtitle">
+        Mostrando mi biografía de forma creativa e interesante para el usuario.
+      </p>
+    </section>
+
+    <!-- Sección Sobre Mí -->
+    <section id="sobre-mi" class="section">
+      <h2>Sobre Mí</h2>
+      <p>
+        Soy una persona que le gusta proponerse metas e intenta esforzarse al máximo por lograrlas, aprendo de mis errores y trato de mejorar, me gustan las matemáticas, la tecnología, los deportes, y hacer cosas diferentes.
+      </p>
+      <img src="Imagenes/4.png" alt="Santi en estilo cómic" class="avatar" />
+    </section>
+
+    <!-- Sección Mi App -->
+    <section id="mi-app" class="section">
+      <h2>Mi App</h2>
+      <p>
+        Qué puedes encontrar en ella? Situaciones y momentos que pueden ayudarte a aprender de ellos y reaccionar a los problemas que se presentan.
+      </p>
+      <div class="teaser-panel">
+        <img src="Imagenes/1.png" alt="Panel de cómic" class="panel-teaser" />
+        <img src="Imagenes/2.png" alt="Panel de cómic" class="panel-teaser" />
+        <img src="Imagenes/3.png" alt="Panel de cómic" class="panel-teaser" />
+      </div>
+    </section>
+
+    <!-- Sección Comics -->
+    <section id="comics" class="section">
+      <h2>Comics</h2>
+      <div class="comic-grid">
+
+        <!-- Tarjeta V1 -->
+        <article class="comic-card">
+          <img src="Imagenes/1.png" alt="V1: Infancia en Bucaramanga" class="comic-cover" />
+          <h3>V1: Infancia</h3>
+          <p>
+            Primeros años creciendo, juegos en la calle, escuela y amigos.
+          </p>
+          <a href="HTML/comic-v1.html" class="btn">Leer Comic</a>
+        </article>
+
+        <!-- Tarjeta V2 -->
+        <article class="comic-card">
+          <img src="Imagenes/2.png" alt="V2: Juventud y descubrimientos" class="comic-cover" />
+          <h3>V2: Juventud y descubrimientos</h3>
+          <p>
+            Aventuras en la adolescencia, decisiones importantes y nuevas experiencias
+          </p>
+          <a href="HTML/comic-v2.html" class="btn">Leer Comic</a>
+        </article>
+
+        <article class="comic-card">
+          <img src="Imagenes/3.png" alt="V2: Juventud y descubrimientos" class="comic-cover" />
+          <h3>V3: Presente y Adolescencia</h3>
+          <p>
+            Cambios en mi forma de pensar, de comportarme, nuevas metas y mas madurez
+          </p>
+          <a href="HTML/comic-v3.html" class="btn">Leer Comic</a>
+        </article>
+    </section>
+    
+        <!-- Sección 1: Quién soy -->
+    <section id="quien-estoy-construyendo" class="section">
+    <h2>1️⃣ ¿Quién estoy construyendo ser?</h2>
+    <p><strong>Un joven en fase de construcción intensiva de identidad.</strong></p>
+    <p>
+        Fuerte físicamente 💪<br>
+        Inteligente estratégicamente 🧠<br>
+        Independiente económicamente 💰<br>
+        Socialmente atractivo 😎<br>
+        Mentalmente profundo 🌌
+    </p>
+    <p><em>No quiero ser promedio. Quiero destacar sin forzarlo.</em></p>
+    </section>
+
+    <!-- Sección 2: Mis Objetivos -->
+    <section id="mis-objetivos" class="section">
+    <h2>2️⃣ Mis Grandes Objetivos</h2>
+    <div class="comic-grid">
+        <article class="comic-card">
+        <h3>🏋️ Físico Estético</h3>
+        <p>Entreno 6 días a la semana. Busco hipertrofia real y activación muscular máxima.</p>
+        <p>Trabajo en mi estética facial y presencia. Sigo una alimentación estratégica.</p>
+        <p><strong>Objetivo:</strong> verme fuerte, estructurado e imponente.</p>
+        </article>
+        
+        <article class="comic-card">
+        <h3>💬 Seguridad Social</h3>
+        <p>Soy sociable por naturaleza. Busco equilibrio entre seriedad y confianza.</p>
+        <p>Trabajo en mi comunicación y presencia.</p>
+        <p><strong>Objetivo:</strong> proyectar seguridad sin incomodar.</p>
+        </article>
+        
+        <article class="comic-card">
+        <h3>💼 Independencia</h3>
+        <p>Tengo una empresa de detalles y regalos. Me interesa el diseño, branding y marketing.</p>
+        <p>Exploro negocios digitales y oportunidades estratégicas.</p>
+        <p><strong>Objetivo:</strong> construir algo propio y rentable.</p>
+        </article>
+        
+        <article class="comic-card">
+        <h3>💻 Dominio Tecnológico</h3>
+        <p>Aprendo HTML, CSS y JavaScript. Estudio estructuras, sintaxis y buenas prácticas.</p>
+        <p>Me interesa SCRUM, APIs y programación con lógica.</p>
+        <p><strong>Objetivo:</strong> entender la tecnología desde la raíz.</p>
+        </article>
+        
+        <article class="comic-card">
+        <h3>🌍 Profundidad</h3>
+        <p>Reflexiono sobre sociedad y cultura. Analizo temas como el hiperindividualismo moderno.</p>
+        <p>Busco comprender el mundo más allá de lo superficial.</p>
+        <p><strong>Objetivo:</strong> desarrollar pensamiento crítico real.</p>
+        </article>
+    </div>
+    </section>
+
+    <!-- Sección 3 y 4: Cualidades y Logros -->
+    <section id="cualidades-logros" class="section">
+    <h2>3️⃣ Mis Cualidades</h2>
+    <p>
+        ✔ Curiosidad profunda <br>
+        ✔ Mentalidad de crecimiento <br>
+        ✔ Creatividad visual <br>
+        ✔ Capacidad estratégica <br>
+        ✔ Autoconciencia social <br>
+        ✔ Disciplina en construcción
+    </p>
+    
+    <br>
+
+    <h2>4️⃣ Logros Actuales</h2>
+    <p>
+        🏆 6 meses de entrenamiento con resultados visibles.<br>
+        🏆 Empresa propia en desarrollo.<br>
+        🏆 Formación autodidacta en desarrollo web.<br>
+        🏆 Mentalidad enfocada en mejorar constantemente.
+    </p>
+    </section>
+
+    <!-- Sección 5: Visión y Fase Actual -->
+    <section id="vision-y-fase" class="section">
+    <h2>5️⃣ Mi Visión</h2>
+    <p>Convertirme en una versión difícil de ignorar. Una persona:</p>
+    <p style="font-weight: bold; font-size: 1.2rem; color: #000;">
+        Fuerte. Inteligente. Independiente. Admirable. Estratégica.
+    </p>
+    
+    <hr style="border: 2px dashed #ffcc00; margin: 2rem 0;">
+
+    <h2>🔥 Fase Actual</h2>
+    <p>
+        Estoy en proceso.<br>
+        Estoy construyendo.<br>
+        Estoy desarrollando mi identidad con intención.<br>
+        <strong style="font-size: 1.3rem; color: #000;">Y esto apenas comienza.</strong>
+    </p>
+    </section>
+</body>
+<html>
